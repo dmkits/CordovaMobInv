@@ -168,10 +168,6 @@ function showRealQtyFunction(cell,displayedQty, prodName){
       close:function(){
         focusBarcodeInput()
       }
-      //,
-      //opened:function(){
-      //  //document.getElementById("inputRealQty").focus();
-      //}
     },
     buttons:[
       {
@@ -195,8 +191,7 @@ function showRealQtyFunction(cell,displayedQty, prodName){
   realQtyDialog.open();
 }
 
-
-$$('#autocomplete-standalone').on('click', function(){
+$$('#loginUserInput').on('click', function(){
   selectUserDialog();
 });
 
@@ -204,91 +199,44 @@ var usersDialog;
 function selectUserDialog(){
   usersDialog=app7.dialog.create({
     content:generateUserDialogContent(users),
-    on: {
-      open:function(){
-        //var loginNames=$$('.loginUsersName');
-
-        var loginNames=document.getElementsByClassName('loginUsersName');
-
-        for (var j in users){
-          loginNames[j].innerHTML=users[j].name;
-          loginNames[j].name=users[j].name;
-          loginNames[j].onclick=function(){
-            setUserloginData(this.name);
-          }
-        }
-      }
-      //,
-      //opened: function () {
-      //  //for (var f in users) {
-      //  //  var username=users[f].name;
-      //  //  document.getElementById('loginDialog' + users[f].name).onclick = function () {
-      //  //    setUserloginData(username);
-      //  //  };
-      //  //  var li=$$('#loginDialog'+users[f].name);
-      //  //  li.on('click', function() {
-      //  //
-      //  //    setUserloginData(li.prop('name'))
-      //  //    });
-      //
-      //    //.prop(propName)
-      //    //$$('#loginDialog'+users[f].name).on('click', function(el){
-      //    //  alert("ELEMENT="+el);
-      //    //  setUserloginData(users[f].name);
-      //    //})
-      //  }
-      //}
-    }
+    //on: {
+    //  //open: function () {
+    //  //  var loginNamesList = document.getElementsByClassName('loginUsersName');
+    //  //  setLoginNamesPropsRecursively(0,loginNamesList,users, function(){
+    //  //    usersDialog.open();
+    //  //  });
+    //  //}
+    //}
   });
-  usersDialog.open();
+  var loginNamesList = document.getElementsByClassName('loginUsersName');
+  setLoginNamesPropsRecursively(0,loginNamesList,users, function(){
+    usersDialog.open();
+  });
 }
 
+function setLoginNamesPropsRecursively(index,loginNamesList,users, callback){
+  if(!users[index])
+    return callback();
+
+  var loginNameLiEl=loginNamesList[index];
+  var userName=users[index].name;
+  loginNameLiEl.innerHTML = userName;
+  loginNameLiEl.name = userName;
+  loginNameLiEl.onclick = function () {
+    setUserloginData(userName);
+  }
+}
 
 function generateUserDialogContent(users){
   if(!users || users.length==0) return '';
   var innerHtml='<div  style="height: 300px; overflow-y: scroll; font-size: 30px;">';
   innerHtml+='<ul>';
   for (var k in users){
-    //var user=users[k];
-    //var userClone={};
-    //var username=user.name.toString();
-
-    //innerHtml+='<li onclick="setUserloginData(\''+username+'\')">'+user.name+'<br>';
-    //innerHtml+='<li id="loginDialog'+userClone.name+'" name="'+userClone.name+'">'+userClone.name+'<br>';
-
     innerHtml+='<li class="loginUsersName">';
-
-
-    //$$('#loginDialog'+username).on('click', function(){
-    //  alert('loginDialog'+username);
-    //  setUserloginData(username);
-    //})
   }
   innerHtml+='</ul>';
   innerHtml+='</div>';
-
-
-
-
   return innerHtml;
-
-  //if(!users || users.length==0) return '';
-  ////var div=$$('div');
-  //var div=$$.add('div');
-  //div.css({
-  //  height:"300px",
-  //  'overflow-y': 'scroll',
-  //  'font-size': '30px'
-  //});
-  //var ul=div.add('ul');
-  //for (var k in users){
-  //  var user=users[k];
-  //  var username=user.name.toString();
-  //  ul.add('li')
-  //      .on('click', function(){
-  //        setUserloginData(username);})
-  //      .html(user.name+'<br>') ;
-  //}
 }
 
 function setUserloginData(username){
