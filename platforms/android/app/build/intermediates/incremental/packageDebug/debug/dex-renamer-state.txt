@@ -1,4 +1,4 @@
-#Sat Jun 16 12:55:48 EEST 2018
+#Mon Jun 18 13:06:45 EEST 2018
 base.0=/home/ianagez/CordovaProjects/MobInv/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 file.0=/home/ianagez/CordovaProjects/MobInv/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex

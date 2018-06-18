@@ -27,7 +27,6 @@ routes = [
         //});
 
 
-
         var maxWidth=document.getElementById("tableWithFixedHead").clientWidth+'px';
 
         document.getElementById("tableWithFixedHead").style.maxWidth=maxWidth;

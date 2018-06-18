@@ -191,7 +191,7 @@ function showRealQtyFunction(cell,displayedQty, prodName){
   realQtyDialog.open();
 }
 
-$$('#loginUserInput').on('click', function(){
+$$('#my-login-screen [name="username"]').on('click', function(){
   selectUserDialog();
 });
 
@@ -199,44 +199,36 @@ var usersDialog;
 function selectUserDialog(){
   usersDialog=app7.dialog.create({
     content:generateUserDialogContent(users),
-    //on: {
-    //  //open: function () {
-    //  //  var loginNamesList = document.getElementsByClassName('loginUsersName');
-    //  //  setLoginNamesPropsRecursively(0,loginNamesList,users, function(){
-    //  //    usersDialog.open();
-    //  //  });
-    //  //}
-    //}
+    on: {
+      open: function () {
+        $$(document).on('click', '.userNameLi', function(e){
+          setUserloginData(e.target.innerText);
+        });
+      }
+    }
   });
-  var loginNamesList = document.getElementsByClassName('loginUsersName');
-  setLoginNamesPropsRecursively(0,loginNamesList,users, function(){
-    usersDialog.open();
-  });
-}
-
-function setLoginNamesPropsRecursively(index,loginNamesList,users, callback){
-  if(!users[index])
-    return callback();
-
-  var loginNameLiEl=loginNamesList[index];
-  var userName=users[index].name;
-  loginNameLiEl.innerHTML = userName;
-  loginNameLiEl.name = userName;
-  loginNameLiEl.onclick = function () {
-    setUserloginData(userName);
-  }
+  usersDialog.open();
 }
 
 function generateUserDialogContent(users){
   if(!users || users.length==0) return '';
-  var innerHtml='<div  style="height: 300px; overflow-y: scroll; font-size: 30px;">';
-  innerHtml+='<ul>';
-  for (var k in users){
-    innerHtml+='<li class="loginUsersName">';
+  var dialogDiv=document.createElement('div');
+  dialogDiv.setAttribute("id","loginDialogContent");
+  dialogDiv.setAttribute("style","height:300px");
+  dialogDiv.style.overflow="scroll";
+  dialogDiv.style.fontSize="30px";
+  var ul=document.createElement('ul');
+  dialogDiv.appendChild(ul);
+
+  document.getElementById('app').appendChild(dialogDiv);
+  for(var i in users){
+    var userName=users[i].name;
+    var userNameLi=document.createElement('li');
+    userNameLi.innerHTML=userName;
+    userNameLi.setAttribute("class",'userNameLi');
+    ul.appendChild(userNameLi);
   }
-  innerHtml+='</ul>';
-  innerHtml+='</div>';
-  return innerHtml;
+  return document.getElementById('loginDialogContent').outerHTML;
 }
 
 function setUserloginData(username){
