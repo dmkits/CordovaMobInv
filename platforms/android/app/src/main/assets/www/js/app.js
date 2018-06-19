@@ -144,8 +144,6 @@ function setTotalQty(){
   var totalrealQty=0;
 
   for(var tdIndex=0; tdIndex<refQtylist.length; tdIndex++){
-    console.log('totalrealQty=', totalrealQty);
-    console.log('innerHTML=', refQtylist[tdIndex].innerHTML);
     totalrealQty+=parseInt(refQtylist[tdIndex].innerHTML);
     totalrefQty+=parseInt(realQtylist[tdIndex].innerHTML);
   }
@@ -226,12 +224,8 @@ function generateUserDialogContent(users){
     var userNameLi=document.createElement('li');
     userNameLi.innerHTML=userName;
     userNameLi.setAttribute("class",'userNameLi');
-    //userNameLi.setAttribute("name",userName);
-    //userNameLi.setAttribute("id",'loginDialog'+userName);
-    //userNameLi.setAttribute('onclick',"setUserloginData('"+userName+"')");
     ul.appendChild(userNameLi);
   }
-  //console.log('loginDialogContent=', document.getElementById('loginDialogContent').outerHTML);
   return document.getElementById('loginDialogContent').outerHTML;
 }
 
@@ -239,12 +233,17 @@ function setUserloginData(username){
   usersDialog.close();
   $$('#my-login-screen [name="username"]').val(username);
 }
+
 function unfocusBarcodeInput(){
-  var barcodeInput=document.getElementById("barCodeInput");
-  barcodeInput.onblur=function(){};
-  barcodeInput.blur();
+  $$('#barCodeInput').prop("alwaysInFocus", false);
 }
+
 function focusBarcodeInput(){
-  var barcodeInput=document.getElementById("barCodeInput");
-  barcodeInput.onblur=barcodeInput.focus();
-}
+  $$('#barCodeInput').prop("alwaysInFocus", true);
+  $$('#barCodeInput').on('blur', '#barCodeInput', function(e){
+    if($$('#barCodeInput').prop("alwaysInFocus")){
+      $$('#barCodeInput').focus();
+    }
+  });
+  $$('#barCodeInput').focus();
+};

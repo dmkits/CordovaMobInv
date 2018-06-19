@@ -11,20 +11,20 @@ routes = [
       //  // do something before page gets into the view
       //},
       pageAfterIn: function (event, page) {
-         //do something after page gets into the view
 
+        $$(document).on('click','#enterRowButton' ,function(){
+          createTableRow();
+        });
 
-        //$$('#enterRowButton').on('click', function(){
-        //  createTableRow();
+        //$$('#barCodeInput').on('blur', '#barCodeInput', function(e){
+        //  $$(e.target).focus();
         //});
-        //
-        //$$('#barCodeInput').on('blur', function(){
-        //  $$('#barCodeInput').focus();
-        //});
-        //
-        //$$('#barCodeInput').on('keypress', function(event){
-        //  onkeypressFunction(event.keyCode);
-        //});
+        focusBarcodeInput();
+
+        $$(document).on('keypress', '#barCodeInput',function(event){
+          onkeypressFunction(event.keyCode);
+        });
+
 
 
         var maxWidth=document.getElementById("tableWithFixedHead").clientWidth+'px';
@@ -50,17 +50,12 @@ routes = [
 
         document.getElementById("totalEmpty").style.width
             =(document.getElementById('code_td').offsetWidth
-            + document.getElementById('um_td').offsetWidth-8) + "px";
-
-        //document.getElementById("footTableFixedHeader").style.width=
-        //    (document.getElementById('um_td').offsetWidth-11) + "px";
+            + document.getElementById('um_td').offsetWidth-10) + "px";
 
         document.getElementById("totalDocQty").style.width=
             (document.getElementById('doc_qty').offsetWidth-10) + "px";
         document.getElementById("totalRealQty").style.width=
-            (document.getElementById('real_qty').offsetWidth-10) + "px";
-
-
+            (document.getElementById('real_qty').offsetWidth-11) + "px";
       }
       //pageInit: function (event, page) {
       //  // do something when page initialized
@@ -77,5 +72,5 @@ routes = [
   {
     path: '(.*)',
     url: './pages/404.html'
-  },
+  }
 ];
