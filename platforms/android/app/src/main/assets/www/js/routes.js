@@ -53,7 +53,7 @@ routes = [
             + document.getElementById('um_td').offsetWidth-10) + "px";
 
         document.getElementById("totalDocQty").style.width=
-            (document.getElementById('doc_qty').offsetWidth-10) + "px";
+            (document.getElementById('doc_qty').offsetWidth-11) + "px";
         document.getElementById("totalRealQty").style.width=
             (document.getElementById('real_qty').offsetWidth-11) + "px";
       }
