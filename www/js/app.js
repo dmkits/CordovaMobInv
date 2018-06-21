@@ -190,6 +190,7 @@ function showRealQtyFunction(cell,displayedQty, prodName){
 }
 
 $$('#my-login-screen [name="username"]').on('click', function(){
+  Keyboard.hide();
   selectUserDialog();
 });
 
