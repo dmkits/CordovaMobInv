@@ -23,5 +23,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-cipherlab-rs30" spec="https://github.com/mribbons/cordova-plugin-cipherlab-rs30" />
+    <engine name="android" spec="^6.4.0" />
 </widget>

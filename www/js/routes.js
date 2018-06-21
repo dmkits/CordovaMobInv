@@ -19,13 +19,11 @@ routes = [
         //$$('#barCodeInput').on('blur', '#barCodeInput', function(e){
         //  $$(e.target).focus();
         //});
-        focusBarcodeInput();
+        //focusBarcodeInput();
 
         $$(document).on('keypress', '#barCodeInput',function(event){
           onkeypressFunction(event.keyCode);
         });
-
-
 
         var maxWidth=document.getElementById("tableWithFixedHead").clientWidth+'px';
 

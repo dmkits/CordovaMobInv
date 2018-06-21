@@ -1,44 +1,54 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+(function () {
+    "use strict";
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+    document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+    function append(message) {
+        alert(message);
+        var node = document.createElement("p");
+        node.appendChild(document.createTextNode(message));
+        document.body.appendChild(node);
     }
-};
 
-app.initialize();
+    async function onDeviceReady() {
+        // Handle the Cordova pause and resume events
+        document.addEventListener( 'pause', onPause.bind( this ), false );
+        document.addEventListener('resume', onResume.bind(this), false);
+
+        //document.getElementById("scan_button").addEventListener('click', function () {
+        //    cordova.plugins.CipherlabRS30CordovaPlugin.requestScan(function () {
+        //        // MDR 30/11/2015 - This is just a placeholder callback. Results will be handled by setReceiveScanCallback() parameter below
+        //    });
+        //});
+
+        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+        await cordova.plugins.CipherlabRS30CordovaPlugin.initialise(async function () {
+
+            append("init done");
+
+            cordova.plugins.CipherlabRS30CordovaPlugin.setReceiveScanCallback(function (data, type) {
+                append("scan received: " + data + "(" + type + ")");
+            });
+
+            //// or alternatively, if your data contains binary data you can get an array of integers:
+            //await cordova.plugins.CipherlabRS30CordovaPlugin.setEnableBinaryData(true);
+            //cordova.plugins.CipherlabRS30CordovaPlugin.setReceiveScanCallback(function (data, type, binary) {
+            //    // process binary array
+            //}
+        });
+
+        window.onbeforeunload = function () {
+            cordova.plugins.CipherlabRS30CordovaPlugin.destroy(function () { });
+        };
+
+        append("setup done");
+    };
+
+    function onPause() {
+        // TODO: This application has been suspended. Save application state here.
+    };
+
+    function onResume() {
+        // TODO: This application has been reactivated. Restore application state here.
+    };
+} )();

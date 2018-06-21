@@ -58,8 +58,8 @@ function onkeypressFunction(keyCode){
   }
 }
 
-function createTableRow(){
-  var barcode=$$("#barCodeInput").val();
+function createTableRow(barcode){
+  if(!barcode) barcode=$$("#barCodeInput").val();
   if(document.getElementById(barcode)){
     document.getElementById(barcode).innerText=parseInt(document.getElementById(barcode).innerText)+1;
     document.getElementById("barCodeInput").value='';
@@ -158,15 +158,15 @@ function showRealQtyFunction(cell,displayedQty, prodName){
     content:input,
     title: 'Фактический остаток',
     text:prodName,
-    on:{
-      open:function(){
-        unfocusBarcodeInput();
-        document.getElementById("inputRealQty").focus();
-      },
-      close:function(){
-        focusBarcodeInput()
-      }
-    },
+    //on:{
+    //  open:function(){
+    //    unfocusBarcodeInput();
+    //    document.getElementById("inputRealQty").focus();
+    //  },
+    //  close:function(){
+    //    focusBarcodeInput()
+    //  }
+    //},
     buttons:[
       {
         text:"ОТМЕНА",
@@ -234,16 +234,22 @@ function setUserloginData(username){
   $$('#my-login-screen [name="username"]').val(username);
 }
 
-function unfocusBarcodeInput(){
-  $$('#barCodeInput').prop("alwaysInFocus", false);
-}
+//function unfocusBarcodeInput(){
+//  $$('#barCodeInput').prop("alwaysInFocus", false);
+//}
+//
+//function focusBarcodeInput(){
+//  $$('#barCodeInput').prop("alwaysInFocus", true);
+//  $$('#barCodeInput').on('blur', '#barCodeInput', function(e){
+//    if($$('#barCodeInput').prop("alwaysInFocus")){
+//      $$('#barCodeInput').focus();
+//    }
+//  });
+//  $$('#barCodeInput').focus();
+//};
 
-function focusBarcodeInput(){
-  $$('#barCodeInput').prop("alwaysInFocus", true);
-  $$('#barCodeInput').on('blur', '#barCodeInput', function(e){
-    if($$('#barCodeInput').prop("alwaysInFocus")){
-      $$('#barCodeInput').focus();
-    }
-  });
-  $$('#barCodeInput').focus();
-};
+//cordova.plugins.CipherlabRS30CordovaPlugin.initialise();
+//cordova.plugins.CipherlabRS30CordovaPlugin.setReceiveScanCallback(function (data) {
+//  alert("scan received: " + data);
+//  createTableRow(data);
+//});
